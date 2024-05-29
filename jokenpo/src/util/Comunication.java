@@ -56,7 +56,7 @@ public class Comunication {
     public String receiveString() {
         try {
             return (String) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {            
             e.printStackTrace();
             return null;
         }
@@ -132,13 +132,13 @@ public class Comunication {
                     send("Resposta invalida!");
                 }
             } else {
-                running = false;
+                break;
             }
         }
         return answer;
     }
 
-    public String qABucleFromMapForAWhile(String question, Map<String, String> mapOptions, String extraWord, String exitWord, long milliseconds) {
+    public String qABucleForAWhile(String question, Map<String, String> mapOptions, String extraWord, String exitWord, long milliseconds) {
         if (extraWord != null) {
             mapOptions.put(extraWord, extraWord);
         }
@@ -148,8 +148,7 @@ public class Comunication {
         Set<String> keys = mapOptions.keySet();
         String arr[] = new String[mapOptions.size()];
         keys.toArray(arr);
-        String answer = qABucleForAWhile(question, arr, exitWord, milliseconds);
-        System.out.println("answer " + answer);
+        String answer = qABucleForAWhile(question, arr, exitWord, milliseconds);        
         if (answer == null) {
             return answer;
         } 
@@ -160,7 +159,7 @@ public class Comunication {
         }
     }
 
-    public boolean checkForObjectInput(long milliseconds) {
+    private boolean checkForObjectInput(long milliseconds) {
         long startTime = System.currentTimeMillis();
         long elapsedTime = 0;
         boolean isObjectInput = false;
@@ -170,10 +169,10 @@ public class Comunication {
                     isObjectInput = true;
                     break;
                 } else {
-                    TimeUnit.MILLISECONDS.sleep(300);
+                    TimeUnit.MILLISECONDS.sleep(100);
                     elapsedTime = System.currentTimeMillis() - startTime;
                 }
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException | InterruptedException e) {                
                 e.printStackTrace();
             }
         }

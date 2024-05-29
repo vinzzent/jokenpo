@@ -15,7 +15,7 @@ public class LobbyService extends EntryService {
         return Server.lobbyServices.containsKey(getPk());
     }
 
-    private void removeUserFromLobby(String pk) {
+    private synchronized void removeUserFromLobby(String pk) {
         Server.lobbyServices.remove(pk);
     }
 
@@ -55,7 +55,7 @@ public class LobbyService extends EntryService {
             if (isInLobby()) {
                 if ((Server.lobbyServices.size() - 1) == 0) {
                     String[] validOptions = {"a"};
-                    String option = uA.qABucleForAWhile("Só vocë está conectado. Pressione a tecla 'a' para atualizar a lista de jogadores e receber desafíos de outros jogadores.", validOptions, null, (long) 10000);
+                    String option = uA.qABucleForAWhile("Só vocë está conectado. Pressione a tecla 'a' para atualizar a lista de usuários e receber desafíos. Será feita uma atualização automática em 5,00 segundos.", validOptions, null, (long) 5000);
                     if (null == option) {
                     } else {
                         switch (option) {
@@ -69,8 +69,11 @@ public class LobbyService extends EntryService {
                     }
                 } else {
                     Map<String, String> usersInLobby = getUsersInLobby();
+                    int n = usersInLobby.size() + 1;
+                    double t = Math.log10(n)*20000;
+                    uA.send("Número de usuários no lobby: " + n + ". " + "Tempo até a proxima atualização automática: " + String.format("%,.2f", t/1000) + " segundos.");
                     displayUsersInLobby(usersInLobby);
-                    String option = uA.qABucleFromMapForAWhile("Selecione o jogador a quem deseja desafiar ou pressione a tecla 'a' para atualizar a lista de jogadores disponíveis.", usersInLobby, "a", null, (long) 10000);
+                    String option = uA.qABucleForAWhile("Selecione o jogador a quem deseja desafiar ou pressione a tecla 'a' para atualizar a lista de usuários.", usersInLobby, "a", null, (long) t);
                     if (option != null) {                       
                         switch (option) {
                             case "sair":                               
@@ -88,7 +91,7 @@ public class LobbyService extends EntryService {
                                             removeUserFromLobby(oponentService.getPk());
                                             setChallengeSender(true);
                                             ChallengeService challenge = new ChallengeService(oponentService.getPk(), getUserAgent());
-                                            Server.challengeService.put(challenge.getPk(), challenge);
+                                            Server.challengeServices.put(challenge.getPk(), challenge);
                                             challenge.start();                                                                                       
                                         } else {
                                             uA.send("O usuário selecionado não está disponível neste momento.");                                           
@@ -107,7 +110,7 @@ public class LobbyService extends EntryService {
                 }
             } else {
                 if (!isChallengeSender()) {
-                    ChallengeService challenge = Server.challengeService.get(getPk());
+                    ChallengeService challenge = Server.challengeServices.get(getPk());
                     if (challenge != null) {                       
                         challenge.setOponentAgent(getUserAgent());
                         running = false;
@@ -119,7 +122,7 @@ public class LobbyService extends EntryService {
                         }
                     }
                 } else {
-                    uA.send("Alguma coisa deu errada.");
+                    uA.send("Alguma coisa deu errada. Não está no lobby e enviou o desafío, porém não saiu da thread lobby. Continuará no lobby.");
                     if(!Server.lobbyServices.containsKey(getPk())) {
                         Server.lobbyServices.put(getPk(), this);
                     }

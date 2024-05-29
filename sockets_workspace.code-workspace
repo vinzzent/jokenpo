@@ -4,5 +4,6 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {"files.encoding": "utf8"
+	}
 }

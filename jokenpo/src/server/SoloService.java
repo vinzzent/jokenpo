@@ -22,24 +22,24 @@ public class SoloService extends EntryService {
             String roundResult = JokenpoLogic.checkResult(clientWord, cpuWord);
             switch (roundResult) {
                 case "0": {
-                    uA.send("EMPATE >>>>> cliente: " + clientWord + " - servidor: " + cpuWord);
+                    uA.send("EMPATE >>> cliente: " + clientWord + " - servidor: " + cpuWord);
                     nTie += 1;
                     break;
                 }
                 case "1": {
-                    uA.send("O CLIENTE GANHOU >>>>> cliente: " + clientWord + " - servidor: " + cpuWord);
+                    uA.send("O CLIENTE GANHOU >>> cliente: " + clientWord + " - servidor: " + cpuWord);
                     nClientWon += 1;
                     break;
                 }
                 case "2": {
-                    uA.send("O SERVIDOR GANHOU >>>>> cliente: " + clientWord + " - servidor: " + cpuWord);
+                    uA.send("O SERVIDOR GANHOU >>> cliente: " + clientWord + " - servidor: " + cpuWord);
                     nCpuWon += 1;
                     break;
                 }
             }
-            uA.send("PLACAR >>>>> CLIENTE: " + nClientWon + " | SERVIDOR: " + nCpuWon + " | EMPATE: " + nTie + " | TOTAL RODADAS: " + (nClientWon + nCpuWon + nTie));
+            uA.send("PLACAR >>> CLIENTE: " + nClientWon + " | SERVIDOR: " + nCpuWon + " | EMPATE: " + nTie + " | TOTAL RODADAS: " + (nClientWon + nCpuWon + nTie));
         }
-        uA.send("PLACAR >>>>> CLIENTE: " + nClientWon + " | SERVIDOR: " + nCpuWon + " | EMPATE: " + nTie + " | TOTAL RODADAS: " + (nClientWon + nCpuWon + nTie));
+        uA.send("PLACAR >>> CLIENTE: " + nClientWon + " | SERVIDOR: " + nCpuWon + " | EMPATE: " + nTie + " | TOTAL RODADAS: " + (nClientWon + nCpuWon + nTie));
         uA.send("Servidor encerra serviço contra a CPU: " + getPk());
         Server.soloServices.remove(getPk());
         System.out.println("Solo service for client " + uA.getPk() + " ended");

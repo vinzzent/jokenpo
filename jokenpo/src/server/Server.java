@@ -13,15 +13,16 @@ public class Server {
     protected static Map<String, EntryService> entryServices;
     protected static Map<String, SoloService> soloServices;
     protected static Map<String, LobbyService> lobbyServices;
-    protected static Map<String, ChallengeService> challengeService;
-    //protected static Map<String, GameVsService> gameVsService;
+    protected static Map<String, ChallengeService> challengeServices;
+    protected static Map<String, VersusService> versusServices;
 
     public Server(int port) {
         setServerSocket(port);
         setEntryService();
         setSoloServices();
         setLobbyServices();
-        setChallengeService();
+        setChallengeServices();
+        setVersusServices();
     }
 
     private void setEntryService() {
@@ -36,8 +37,12 @@ public class Server {
         lobbyServices = new HashMap<>();
     }
 
-    private void setChallengeService() {
-        challengeService = new HashMap<>();
+    private void setChallengeServices() {
+        challengeServices = new HashMap<>();
+    }
+
+    private void setVersusServices() {
+        versusServices = new HashMap<>();
     }
 
     private void setServerSocket(int port) {
@@ -57,10 +62,9 @@ public class Server {
             UserAgent uA = new UserAgent(com);
             EntryService service = new EntryService(uA);
             entryServices.put(service.getPk(), service);
-
             service.start();            
         } catch (IOException e) {
-            System.out.println("Error at adding entrance service: " + e.getMessage());
+            System.out.println("Error at adding entry service: " + e.getMessage());
         }        
     }
 
@@ -72,6 +76,3 @@ public class Server {
         }
     }
 }
-
-
-    

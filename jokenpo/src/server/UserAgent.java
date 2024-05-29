@@ -53,10 +53,7 @@ public class UserAgent {
         return com.qABucleForAWhile(question, validAnswers, exitWord, milliseconds);
     }
 
-    protected String qABucleFromMapForAWhile(String question, Map<String, String> mapOptions, String extraWord, String exitWord, long milliseconds) {
-        return com.qABucleFromMapForAWhile(question, mapOptions, extraWord, exitWord, milliseconds);
+    protected String qABucleForAWhile(String question, Map<String, String> mapOptions, String extraWord, String exitWord, long milliseconds) {
+        return com.qABucleForAWhile(question, mapOptions, extraWord, exitWord, milliseconds);
     }
 }
-
-
-

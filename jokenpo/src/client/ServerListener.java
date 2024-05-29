@@ -28,7 +28,5 @@ public class ServerListener extends Thread {
             }
         }
         System.out.println("Ending server listener");  
-    }
- 
+    } 
 }
-
