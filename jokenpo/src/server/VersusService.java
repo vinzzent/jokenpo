@@ -55,7 +55,7 @@ public class VersusService extends ChallengeService {
                     uA.send("PLACAR FINAL >>> Vitórias: " + nUa + " | Derrotas: " + nOa + " | Empates: " + nTie + " | Rodadas inválidas: " + nInv + " | Total de rodadas: " + (nUa + nOa + nTie + nInv) + ".");
                     oA.send("PLACAR FINAL >>> Vitórias: " + nOa + " | Derrotas: " + nUa + " | Empates: " + nTie + " | Rodadas inválidas: " + nInv + " | Total de rodadas: " + (nUa + nOa + nTie + nInv) + ".");
                     uA.send("O usuário " + oA.getPk() + " : " + oA.getUserName() + " se desconectou.");
-                    LobbyService lobbyService = new LobbyService(oA);
+                    LobbyService lobbyService = new LobbyService(uA);
                     Server.lobbyServices.put(lobbyService.getPk(), lobbyService);
                     lobbyService.start();
                     break;
@@ -88,32 +88,52 @@ public class VersusService extends ChallengeService {
                 uA.send("O usuário " + oA.getPk() + " : " + oA.getUserName() + " e você demoraram muito. Rodada inválida.");
                 oA.send("O usuário " + uA.getPk() + " : " + uA.getUserName() + " e você demoraram muito. Rodada inválida.");
             } else if (uAWord == null && oAWord != null) {
-                nOa++;
-                oA.send("O usuário " + uA.getPk() + " : " + uA.getUserName() + " demorou muito. Ponto para você!");
-                uA.send("Você demorou muito. Ponto para o usuário " + oA.getPk() + " : " + oA.getUserName() + ", que lançou a palavra " + oAWord + ".");
+                if (oAWord.equals("sair")) {
+                    uA.send("PLACAR FINAL >>> Vitórias: " + nUa + " | Derrotas: " + nOa + " | Empates: " + nTie + " | Rodadas inválidas: " + nInv + " | Total de rodadas: " + (nUa + nOa + nTie + nInv) + ".");
+                    oA.send("PLACAR FINAL >>> Vitórias: " + nOa + " | Derrotas: " + nUa + " | Empates: " + nTie + " | Rodadas inválidas: " + nInv + " | Total de rodadas: " + (nUa + nOa + nTie + nInv) + ".");
+                    uA.send("O usuário " + oA.getPk() + " : " + oA.getUserName() + " se desconectou.");
+                    LobbyService lobbyService = new LobbyService(uA);
+                    Server.lobbyServices.put(lobbyService.getPk(), lobbyService);
+                    lobbyService.start();
+                    break;
+                } else {
+                    nOa++;
+                    oA.send("O usuário " + uA.getPk() + " : " + uA.getUserName() + " demorou muito. Ponto para você!");
+                    uA.send("Você demorou muito. Ponto para o usuário " + oA.getPk() + " : " + oA.getUserName() + ", que lançou a palavra " + oAWord + ".");
+                }
             } else if (oAWord == null && uAWord != null) {
-                nUa++;
-                uA.send("O usuário " + oA.getPk() + " : " + oA.getUserName() + " demorou muito. Ponto para você!");
-                oA.send("Você demorou muito. Ponto para o usuário " + uA.getPk() + " : " + uA.getUserName() + ": " + uAWord + ", que lançou a palavra " + uAWord + ".");
+                if (uAWord.equals("sair")) {
+                    uA.send("PLACAR FINAL >>> Vitórias: " + nUa + " | Derrotas: " + nOa + " | Empates: " + nTie + " | Rodadas inválidas: " + nInv + " | Total de rodadas: " + (nUa + nOa + nTie + nInv) + ".");
+                    oA.send("PLACAR FINAL >>> Vitórias: " + nOa + " | Derrotas: " + nUa + " | Empates: " + nTie + " | Rodadas inválidas: " + nInv + " | Total de rodadas: " + (nUa + nOa + nTie + nInv) + ".");
+                    oA.send("O usuário " + uA.getPk() + " : " + uA.getUserName() + " se desconectou.");
+                    LobbyService lobbyService = new LobbyService(oA);
+                    Server.lobbyServices.put(lobbyService.getPk(), lobbyService);
+                    lobbyService.start();
+                    break;
+                } else {
+                    nUa++;
+                    uA.send("O usuário " + oA.getPk() + " : " + oA.getUserName() + " demorou muito. Ponto para você!");
+                    oA.send("Você demorou muito. Ponto para o usuário " + uA.getPk() + " : " + uA.getUserName() + ": " + uAWord + ", que lançou a palavra " + uAWord + ".");
+                }                
             }
             uA.send("PLACAR >>> Vitórias: " + nUa + " | Derrotas: " + nOa + " | Empates: " + nTie + " | Rodadas inválidas: " + nInv + " | Total de rodadas: " + (nUa + nOa + nTie + nInv) + ".");
             oA.send("PLACAR >>> Vitórias: " + nOa + " | Derrotas: " + nUa + " | Empates: " + nTie + " | Rodadas inválidas: " + nInv + " | Total de rodadas: " + (nUa + nOa + nTie + nInv) + ".");
             if ((nUa + nOa + nTie + nInv) >= getNRounds()) {
                 uA.send("PLACAR FINAL >>> Vitórias: " + nUa + " | Derrotas: " + nOa + " | Empates: " + nTie + " | Rodadas inválidas: " + nInv + " | Total de rodadas: " + (nUa + nOa + nTie + nInv) + ".");
                 oA.send("PLACAR FINAL >>> Vitórias: " + nOa + " | Derrotas: " + nUa + " | Empates: " + nTie + " | Rodadas inválidas: " + nInv + " | Total de rodadas: " + (nUa + nOa + nTie + nInv) + ".");
-                running = false;
+                if (uA != null) {
+                    LobbyService uAlS = new LobbyService(uA);
+                    Server.versusServices.remove(uAlS.getPk());
+                    uAlS.start();
+                }
+                if (oA != null) {
+                    LobbyService oAlS = new LobbyService(oA);
+                    Server.lobbyServices.put(oAlS.getPk(), oAlS);
+                    oAlS.start();
+                }
+                break;
             }            
-        }
-        if (uA != null) {
-            LobbyService uAlS = new LobbyService(uA);
-            Server.versusServices.remove(uAlS.getPk());
-            uAlS.start();
-        }
-        if (oA != null) {
-            LobbyService oAlS = new LobbyService(oA);
-            Server.lobbyServices.put(oAlS.getPk(), oAlS);
-            oAlS.start();
-        }
+        }        
         Server.versusServices.remove(getPk());
         System.out.println("Versus service " + getPk() + " ended");   
     }

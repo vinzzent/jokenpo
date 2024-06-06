@@ -169,7 +169,7 @@ public class Comunication {
                     isObjectInput = true;
                     break;
                 } else {
-                    TimeUnit.MILLISECONDS.sleep(100);
+                    TimeUnit.MILLISECONDS.sleep(200);
                     elapsedTime = System.currentTimeMillis() - startTime;
                 }
             } catch (IOException | InterruptedException e) {                

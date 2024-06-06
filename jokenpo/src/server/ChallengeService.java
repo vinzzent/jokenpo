@@ -64,7 +64,7 @@ public class ChallengeService extends EntryService {
                 }
             }
             if (uA != null && oA == null) {                
-                QAService uAQ = new QAService(uA, "Aguardando que o usuário selecionado receba o desafío...", null, null, (long) 2000);
+                QAService uAQ = new QAService(uA, "Aguardando que o usuário selecionado receba o desafío...", null, null, (long) 3000);
                 uAQ.start();
                 try {
                     uAQ.join();
@@ -93,7 +93,7 @@ public class ChallengeService extends EntryService {
                     rounds = Integer.toString(getNRounds());
                 }
                 String[] validAnswers = {"s", "n"};                
-                QAService oAQ = new QAService(oA, "Foi desafiado pelo usuário: " + uA.getPk() + " : " + uA.getUserName() + ". Número de rodadas: " + rounds + ". Aceita? (s/n)", validAnswers, null, (long) 3000);
+                QAService oAQ = new QAService(oA, "Foi desafiado pelo usuário: " + uA.getPk() + " : " + uA.getUserName() + ". Número de rodadas: " + rounds + ". Aceita? (s/n)", validAnswers, null, (long) 5000);
                 uAQ.start();
                 oAQ.start();
                 try {
@@ -156,5 +156,4 @@ public class ChallengeService extends EntryService {
         Server.challengeServices.remove(getPk());
         System.out.println("Challenge service " + getPk() + " ended");
     }
-
 }
