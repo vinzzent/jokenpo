@@ -55,7 +55,8 @@ public class LobbyService extends EntryService {
             if (isInLobby()) {
                 if ((Server.lobbyServices.size() - 1) == 0) {
                     String[] validOptions = {"a"};
-                    String option = uA.qABucleForAWhile("Só vocë está conectado. Pressione a tecla 'a' para atualizar a lista de usuários e receber desafíos. Será feita uma atualização automática em 5,00 segundos.", validOptions, null, (long) 5000);
+                    uA.send("");
+                    String option = uA.qABucleForAWhile("Você é o único conectado. Com a tecla 'a' pode atualizar ou aguarde 5 segundos.", validOptions, null, (long) 5000);
                     if (null == option) {
                     } else {
                         switch (option) {
@@ -70,8 +71,9 @@ public class LobbyService extends EntryService {
                 } else {
                     Map<String, String> usersInLobby = getUsersInLobby();
                     int n = usersInLobby.size() + 1;
-                    double t = Math.log10(n)*20000;
-                    uA.send("Número de usuários no lobby: " + n + ". " + "Tempo até a proxima atualização automática: " + String.format("%,.2f", t/1000) + " segundos.");
+                    double t = Math.log10(n)*25000;
+                    uA.send("");
+                    uA.send("Número de usuários no lobby: " + n + ". " + "Tempo até a proxima atualização: " + String.format("%,.2f", t/1000) + " segundos.");
                     displayUsersInLobby(usersInLobby);
                     String option = uA.qABucleForAWhile("Selecione o jogador a quem deseja desafiar ou pressione a tecla 'a' para atualizar a lista de usuários.", usersInLobby, "a", null, (long) t);
                     if (option != null) {                       

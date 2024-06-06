@@ -26,13 +26,14 @@ public class UserInput {
     }
 
     private static int fromStringToInteger(String word) {
-        int number = 0;    
+        int number  = 0;
         try {
-            number = Integer.parseInt(word);
+            number = Integer.parseInt(word);            
         } catch (NumberFormatException e) {
                 System.out.println("Invalid integer input");
                 e.printStackTrace();
-                System.exit(1);        }
+                System.exit(1);        
+        }   
         return number;
     }
 }

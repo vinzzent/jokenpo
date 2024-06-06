@@ -58,10 +58,18 @@ public class Client {
 
     public static void main(String[] args) {        
         UserInput userInput = new UserInput();
-        System.out.println("Servidor?");
-        String host = userInput.word();
-        System.out.println("Porta?");
-        int port = userInput.number();
+        System.out.println("Servidor? (localhost = 'h')");
+        String word = userInput.word();
+        if (word.toLowerCase().trim().equals("h")) {
+            word = "localhost";
+        }
+        String host = word;        
+        System.out.println("Porta? (-1 = 6666)");
+        int number = userInput.number();
+        if (number == -1) {
+            number = 6666;
+        }
+        int port = number;
         Client client = new Client(host, port);        
         try {
            client.socket.isConnected();
