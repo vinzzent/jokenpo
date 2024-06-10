@@ -31,6 +31,3 @@ A partir do diretório de destino, escreva na linha de comando:
 
 #### Servidor:
     java RunServer
-
-#### Alternativamente:
-Se está em Windows pode executar os arquivos ```runserver.bat``` ou ```runclient.bat``` incluídos no diretório base do projeto (```\jokenpo```).
