@@ -17,11 +17,11 @@ public class UserInput {
         this.scanner = new Scanner(System.in);
     }
 
-    protected String word() {
+    public String word() {
         return getScanner().next();
     }
 
-    protected int number() {
+    public int number() {
        return fromStringToInteger(word());
     }
 

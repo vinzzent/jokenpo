@@ -118,7 +118,7 @@ public class VersusService extends ChallengeService {
             }
             uA.send("PLACAR >>> Vitórias: " + nUa + " | Derrotas: " + nOa + " | Empates: " + nTie + " | Rodadas inválidas: " + nInv + " | Total de rodadas: " + (nUa + nOa + nTie + nInv) + ".");
             oA.send("PLACAR >>> Vitórias: " + nOa + " | Derrotas: " + nUa + " | Empates: " + nTie + " | Rodadas inválidas: " + nInv + " | Total de rodadas: " + (nUa + nOa + nTie + nInv) + ".");
-            if ((nUa + nOa + nTie + nInv) >= getNRounds()) {
+            if (getNRounds() > 0 && (nUa + nOa + nTie + nInv) >= getNRounds()) {
                 uA.send("PLACAR FINAL >>> Vitórias: " + nUa + " | Derrotas: " + nOa + " | Empates: " + nTie + " | Rodadas inválidas: " + nInv + " | Total de rodadas: " + (nUa + nOa + nTie + nInv) + ".");
                 oA.send("PLACAR FINAL >>> Vitórias: " + nOa + " | Derrotas: " + nUa + " | Empates: " + nTie + " | Rodadas inválidas: " + nInv + " | Total de rodadas: " + (nUa + nOa + nTie + nInv) + ".");
                 if (uA != null) {

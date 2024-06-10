@@ -55,9 +55,11 @@ public class ChallengeService extends EntryService {
                             break;
                         case "i":
                             setNRounds(-1);
+                            break;
                         default:
                             int n = Integer.parseInt(uAAnswer);
                             setNRounds(n);
+                            break;
                     }
                 } else {
                     setNRounds(-1);                    

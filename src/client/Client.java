@@ -3,7 +3,6 @@ package client;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import util.Comunication;
 
 public class Client {
     private Socket socket;
@@ -20,12 +19,20 @@ public class Client {
         setSocket(address, port);
         Client.setRunning(true);
     }
-    private void setUserInputHandler(UserInputHandler userInputHandler) {
+    public void setUserInputHandler(UserInputHandler userInputHandler) {
         this.userInputHandler = userInputHandler;
     }
 
-    private void setServerListener(ServerListener serverListener) {
+    public void setServerListener(ServerListener serverListener) {
         this.serverListener = serverListener;
+    }
+
+    public UserInputHandler getUserInputHandler() {
+        return userInputHandler;
+    }
+
+    public ServerListener getServerListener() {
+        return serverListener;
     }
 
     protected static void setRunning(boolean running) {
@@ -52,48 +59,7 @@ public class Client {
         }
     }
 
-    private Socket getSocket() {
+    public Socket getSocket() {
         return socket;
     }    
-
-    public static void main(String[] args) {        
-        UserInput userInput = new UserInput();
-        System.out.println("Servidor? (localhost = 'h')");
-        String word = userInput.word();
-        if (word.toLowerCase().trim().equals("h")) {
-            word = "localhost";
-        }
-        String host = word;        
-        System.out.println("Porta? (-1 = 6666)");
-        int number = userInput.number();
-        if (number == -1) {
-            number = 6666;
-        }
-        int port = number;
-        Client client = new Client(host, port);        
-        try {
-           client.socket.isConnected();
-        } catch (NullPointerException e) {
-            System.out.println("Servidor não encontrado em " + host + ":" + port);
-            System.exit(1);
-        }
-        Comunication com = new Comunication(client.getSocket());
-        client.setUserInputHandler(new UserInputHandler(com));
-        client.setServerListener(new ServerListener(com));
-        client.userInputHandler.start();
-        client.serverListener.start();
-        try {
-            client.serverListener.join();
-            client.userInputHandler.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            client.socket.close();
-        } catch (IOException e) {
-            System.out.println("Erro ao encerrar o socket");
-            e.printStackTrace();
-        }
-    }
 }

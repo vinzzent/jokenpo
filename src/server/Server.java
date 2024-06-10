@@ -55,7 +55,7 @@ public class Server {
         }
     }
 
-    private void startEntryService() {      
+    public void startEntryService() {      
         try {
             Socket socket = this.serverSocket.accept();
             Comunication com = new Comunication(socket);
@@ -66,13 +66,5 @@ public class Server {
         } catch (IOException e) {
             System.out.println("Error at adding entry service: " + e.getMessage());
         }        
-    }
-
-    public static void main(String[] args) {
-        Server server = new Server(6666);
-        while (true) {
-            System.out.println("Waiting client...");
-            server.startEntryService();           
-        }
-    }
+    }    
 }
